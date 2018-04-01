@@ -32,7 +32,7 @@ public final class CGLinearFunction {
     }
     
     public func crossingPoint(with function: CGLinearFunction) -> CGPoint {
-        let x: CGFloat = (k - function.k) / (b - function.b)
+        let x: CGFloat = (function.b - b) / (k - function.k)
         let y = self.y(for: x)
         return CGPoint(x: x, y: y)
     }

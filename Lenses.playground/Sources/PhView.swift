@@ -9,12 +9,8 @@ open class PhView: UIView {
     public func drawConvexLens(at opticalCenter: CGPoint, for size: CGSize, color: UIColor) {
         let originPoint = CGPoint(x: opticalCenter.x - size.width / 2, y: opticalCenter.y - size.height / 2)
         let lenPath = UIBezierPath(ovalIn: CGRect(origin: originPoint, size: size))
-        let opticalCenterPointPath = UIBezierPath(arcCenter: opticalCenter, radius: 2, startAngle: 0, endAngle: .pi * 2, clockwise: true)
         color.setStroke()
         lenPath.stroke()
-        opticalCenterPointPath.fill()
-        let text: NSString = "O"
-        text.draw(at: opticalCenter.applying(CGAffineTransform(translationX: 0, y: 5)), withAttributes: [:])
     }
     
     public func drawPrincipleAxis(at opticalCenter: CGPoint, color: UIColor) {
@@ -27,21 +23,27 @@ open class PhView: UIView {
         path.stroke()
     }
     
-    public func drawFocalPoints(at opticalCenter: CGPoint, for focalLength: CGFloat, color: UIColor) {
+    public func drawOpticalCenter(at opticalCenter: CGPoint, color: UIColor) {
         color.setFill()
+        let opticalCenterPointPath = UIBezierPath(arcCenter: opticalCenter, radius: 2, startAngle: 0, endAngle: .pi * 2, clockwise: true)
+        opticalCenterPointPath.fill()
+        "O".draw(atMidTop: opticalCenter.applying(CGAffineTransform(translationX: 0, y: 5)))
+    }
+    
+    public func drawFocalPoints(at opticalCenter: CGPoint, for focalLength: CGFloat, color: UIColor) {
         let focalPoints = [CGPoint(x: opticalCenter.x - focalLength, y: opticalCenter.y),CGPoint(x: opticalCenter.x + focalLength, y: opticalCenter.y)]
         focalPoints.forEach { focalPoint in
+            color.setFill()
             let path = UIBezierPath(arcCenter: focalPoint, radius: 2, startAngle: 0, endAngle: .pi * 2, clockwise: true)
             path.fill()
-            let text: NSString = "F"
-            text.draw(at: focalPoint.applying(CGAffineTransform(translationX: 0, y: 5)), withAttributes: [:])
+            "F".draw(atMidTop: focalPoint.applying(CGAffineTransform(translationX: 0, y: 5)))
         }
         let doubleFocalPoints = [CGPoint(x: opticalCenter.x - focalLength * 2, y: opticalCenter.y),CGPoint(x: opticalCenter.x + focalLength * 2, y: opticalCenter.y)]
         doubleFocalPoints.forEach { focalPoint in
+            color.setFill()
             let path = UIBezierPath(arcCenter: focalPoint, radius: 2, startAngle: 0, endAngle: .pi * 2, clockwise: true)
             path.fill()
-            let text: NSString = "2F"
-            text.draw(at: focalPoint.applying(CGAffineTransform(translationX: 0, y: 5)), withAttributes: [:])
+            "2F".draw(atMidTop: focalPoint.applying(CGAffineTransform(translationX: 0, y: 5)))
         }
     }
     
@@ -126,7 +128,7 @@ open class PhView: UIView {
         arrowRightPath.stroke()
     }
     
-    public func drawImage(`for` type: PhImageType, at startPoint: CGPoint, with height: CGFloat, color: UIColor) {
+    @discardableResult public func drawImage(`for` type: PhImageType, at startPoint: CGPoint, with height: CGFloat, color: UIColor) -> CGPoint {
         color.setStroke()
         let endPoint = startPoint.applying(CGAffineTransform(translationX: 0, y: -height))
         let arrowLength = height / 5
@@ -150,6 +152,7 @@ open class PhView: UIView {
         arrowRightPath.rotate(degree: -30, around: isReversed ? .bottomMid : .topMid)
         arrowLeftPath.stroke()
         arrowRightPath.stroke()
+        return endPoint
     }
     
 }

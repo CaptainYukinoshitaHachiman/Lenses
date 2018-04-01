@@ -101,16 +101,21 @@ public func sayHelloToWWDC() {
     view.addSubview(wwdcView)
     wwdcView.backgroundColor = #colorLiteral(red: 0.1559974253, green: 0.1640306711, blue: 0.2117110193, alpha: 1)
     wwdcView.alpha = 0
-    UIView.animate(withDuration: 1, delay: 1, options: .curveEaseInOut, animations: {
-        let maskView = UIView(frame: wwdcView.bounds)
-        maskView.backgroundColor = wwdcView.backgroundColor
-        wwdcView.addSubview(maskView)
-        UIView.animate(withDuration: 1, animations: {
-            wwdcView.alpha = 1
-        }, completion: { _ in
-            UIView.animate(withDuration: 1) {
-                maskView.frame = wwdcView.bounds.applying(CGAffineTransform(translationX: wwdcView.bounds.width, y: 0))
-            }
-        })
-    })
+    DispatchQueue.global().async {
+        sleep(1)
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 1, animations: {
+                let maskView = UIView(frame: wwdcView.bounds)
+                maskView.backgroundColor = wwdcView.backgroundColor
+                wwdcView.addSubview(maskView)
+                UIView.animate(withDuration: 1, animations: {
+                    wwdcView.alpha = 1
+                }, completion: { _ in
+                    UIView.animate(withDuration: 1) {
+                        maskView.frame = wwdcView.bounds.applying(CGAffineTransform(translationX: wwdcView.bounds.width, y: 0))
+                    }
+                })
+            })
+        }
+    }
 }

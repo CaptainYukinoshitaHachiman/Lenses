@@ -9,11 +9,9 @@ public class ImageShowingView: PhView {
         let realImagePoint = CGPoint(x: width / 5, y: height * 3 / 4)
         let virtualImagePoint = CGPoint(x: width * 4 / 5, y: height * 3 / 4)
         drawImage(for: .real, at: realImagePoint, with: height / 2, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))
-        let realImageText = "Real Image" as NSString
-        realImageText.draw(at: realImagePoint, withAttributes: [:])
+        "Real Image".draw(atMidTop: realImagePoint)
         drawImage(for: .virtual, at: virtualImagePoint, with: height / 2, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))
-        let virtualImageText = "Virtual Image" as NSString
-        virtualImageText.draw(at: virtualImagePoint, withAttributes: [:])
+        "Virtual Image".draw(atMidTop: virtualImagePoint)
     }
     
 }

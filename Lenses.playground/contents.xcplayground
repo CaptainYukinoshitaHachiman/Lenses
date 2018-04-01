@@ -3,7 +3,11 @@
     <pages>
         <page name='Intro'/>
         <page name='Intro to Convex Lens'/>
-        <page name='More about Lens'/>
         <page name='Parallel Light Rays'/>
+        <page name='Pass the Optical Center'/>
+        <page name='More about Convex Lens'/>
+        <page name='Hello, images!'/>
+        <page name='Image Formation'/>
+        <page name='Hello, WWDC!'/>
     </pages>
 </playground>
